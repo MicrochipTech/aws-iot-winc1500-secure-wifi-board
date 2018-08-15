@@ -44,6 +44,7 @@ class ThingListForm {
 	 static String accessKey;
 	 static String secretKey;
 	 static String sessionToken;
+	 static final int COGNITO_UUID_LEN = 36;
 
      static void display(String title, String message) {
     	 
@@ -93,8 +94,9 @@ class ThingListForm {
 		String[] lines = message.split(System.getProperty("line.separator"));
 		String[] val = lines[0].split("=");
 		String temp_uuid = val[1];
-		String cognito_uuid = temp_uuid.substring(0, temp_uuid.length() - 2);
-		System.out.println("cognito_uuid1=" +cognito_uuid);
+
+		String cognito_uuid = temp_uuid.substring(0, COGNITO_UUID_LEN);
+		System.out.println("debug: cognito_uuid=" +cognito_uuid);
         registerButton.setOnAction(e -> {
 			boolean found = false;
      
@@ -103,7 +105,13 @@ class ThingListForm {
 				found = false;
 				System.out.println("wait...");
 				register_message.setText("wait..");
-            	Process p = Runtime.getRuntime().exec("python kit_get_thing_id.py");
+
+				String OS = System.getProperty("os.name").toLowerCase();
+				Process p;
+				if (OS.indexOf("mac") >= 0)
+            		p = Runtime.getRuntime().exec("python3 kit_get_thing_id.py");
+				else 
+					p = Runtime.getRuntime().exec("python kit_get_thing_id.py");
             	 
             	BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             	

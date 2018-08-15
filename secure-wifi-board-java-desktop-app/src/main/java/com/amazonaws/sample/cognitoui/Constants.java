@@ -33,6 +33,6 @@ abstract class Constants {
     static final String HTTP_HEADER_PROP_CONTENT_TYPE = "Content-Type";
     static final String HTTP_HEADER_PROP_CONTENT_TYPE_DEFAULT = "application/x-www-form-urlencoded";
     static final String HTTP_REQUEST_TYPE_POST = "POST";
-    static final String REDIRECT_URL = "https://sid343.reinvent-workshop.com";
+    static final String REDIRECT_URL = "https://www.microchip.com/wwwproducts/en/ATWINC1500";
 
 }
