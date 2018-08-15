@@ -1,7 +1,7 @@
 # Bootloader
 
 ## Installation
-This folder contains the files to configure the bootloader GUI or bootloader scripts
+This folder contains the files to configure the bootloader GUI or bootloader upgrade scripts
 
 To program firmware with bootloader, PC need to install SAM-BA V2.18 (bootloader GUI).
 The installation file can be download from below URL:
