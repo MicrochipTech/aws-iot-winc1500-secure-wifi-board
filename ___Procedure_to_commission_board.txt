@@ -1,0 +1,73 @@
+Sensor board projects:
+
+	Folder :  C:\__SensorBoard_JITR\JITR_pythonScript_JUNE_18_2018\Projects
+	Two (2) projects:
+		1) mcu_firmware - Good,  with SSID & PWD set in the project
+		2) Pjt_with_WiFi_Prov, requires commissioning EVV with SSID and password.
+	
+	
+
+	
+Sensor board commissioning:
+
+	Folder =>  C:\<your folder location>\JITR_pythonScript_JUNE_18_2018\ProvisionScripts
+	Projects:
+		1)Pjt_with_WiFi_Prov,
+			a)copy from "..\Projects\Pjt_with_WiFi_Prov\saml21g18b_sensor_board_demo\Debug" folder "...demo_ECC.bin: -> "ProvisionScripts/" folder "...demo_ECC.bin
+			b)copy "...demo_JITR.bin: -> "...demo_JITR.bin
+		
+	Create Certs and send to your AWS Account(this should only be run once to creae CA cert in AWS Account):
+	
+	CMD prompt : python _CreateCertsAndRegister2AWS.py --profile <your-profile>
+	
+		
+	A) Steps to program the JITR commissioning code to the sensor board. With WiFi commissioning & default WiFi in code
+		
+		1)RESET the Sensor board while holding SW1.  This will put it in Bottloader mode.
+		
+		2)CMD prompt : _SendBrdAppProgramUSB.bat  "saml21g18b_sensor_board_demo_ECC.bin"
+					LED on board will go RED -> YELLOW -> GREEN -> BLUE
+					When done a Notepad file will open.  Close it!
+					RESET the board.  The LED should slow blink Yellow.
+		
+		3)CMD prompt : python _Commission_WiFi_ECC_2AWS.py  --ssid <SSID>  --password <PWD>
+		
+		4)CMD prompt : _SendBrdAppProgramUSB.bat  "saml21g18b_sensor_board_demo_JITR.bin"
+					LED on board will go RED -> YELLOW -> GREEN -> BLUE
+					When done a Notepad file will open.  Close it!
+					RESET the board.  The LED will slow blink blue,  fast blink green  and steady green when connected.
+		
+
+Certificate and Keys flow:
+	A)Python script "_CreateCertsAndRegister2AWS.py" 
+		IMPORTANT:  Make sure you provide your account profile fro "AWS CLI" to configure your AWS IoT account
+		1)  You create a certCA (rootCA.crt) with its private key (root-ca.key,  if this one already exist,  it will reuse it)
+		2)  You then create a signing certificate (signer-ca.csr)and its private key (signer-ca.key, if this one already exist,  it will reuse it)
+		3)  The root-ca  will then sign the signer-ca.csr and create signer-ca.crt
+		4)  This signer-ca.crt is then uploaded to your AWS IoT account
+	
+	B)Program the ECC.bin code
+	
+	C)Python script "_Commission_WiFi_ECC_2AWS.py"
+		1)  Script commission the ECC508 with SSID and PASSWORD for the WiFi connection.
+		2)  Script request the ECC508 to generate a signing certificate (with its private key remaining private in the ECC)
+		3)  The script receives the CSR and signs it with the signer-ca private key signer-ca.key
+		4)  Script sends it back to the ECC508 that stores it.
+	
+	D)Program the JITR.bin project 
+	
+	E)If commissionong OTHER Sensor Board, just run B,C,D again.  No need to creaet a new CERT
+					
+							
+					
+Cloud Formation:
+
+	Folder =>  C:\__SensorBoard_JITR\JITR_pythonScript_APR_18_2018\cloud-formation-templates
+	With user:
+	aws --profile <account-profile> cloudformation create-stack --stack-name myStack --template-body file://./CloudFormation_Stack.yaml --capabilities CAPABILITY_NAMED_IAM --parameters file://./paramater.json 
+	
+	Witout User
+	aws --profile <account-profile> cloudformation create-stack --stack-name myStack --template-body file://./CloudFormation_Stack_NO_User_new.yaml --capabilities CAPABILITY_NAMED_IAM --parameters file://./paramater.json 
+
+	Delete stack :
+	aws --profile <account-profile> cloudformation delete-stack --stack-name myStack 
