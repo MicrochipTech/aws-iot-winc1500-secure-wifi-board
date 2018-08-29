@@ -1,7 +1,13 @@
-﻿# Java GUI Tool for WINC1500 Secure Wi-Fi Board in Microchip 2018 MASTERs Conference
+﻿# WINC1500 Secure Wi-Fi Board in Microchip 2018 MASTERs Conference
 
-This package contains all the python scripts and java executable file to run the WINC1500 Secure Wi-Fi Board Java GUI tool.\
-This Java GUI tool work with the WINC1500 Secure Wi-Fi Board which showed in Microchip 2018 MASTERs Conference.
-The GUI tool is used to let the board users sign-up or sign-in an account used to control the WINC1500 Secure Wi-Fi Board.\
-Go to the [Wiki](https://github.com/MicrochipTech/aws-iot-winc1500-secure-wifi-board-java-gui-for-master-workshop/wiki) for a getting started guide or read the WINC1500 Secure Wi-Fi Board Setup Instruction Guide in this directory.
+This site contains all the python scripts and tools to run the WINC1500 Secure Wi-Fi Board which dispatched in Microchip MASTERs conference 2018\
+The boards that dispatched in Microchip MASTERs are already provisioned to Microchip AWS account.\
+Users can use the Java GUI tool here to sign-up or sign-in an end user account to control the WINC1500 Secure Wi-Fi Board.
+
+Go to the [Wiki](https://github.com/MicrochipTech/aws-iot-winc1500-secure-wifi-board/wiki) for a getting started guide or read [WINC1500 Secure Wi-Fi Board Setup Instruction Guide](https://github.com/MicrochipTech/aws-iot-winc1500-secure-wifi-board/blob/master/Secure-WiFi-Board-CognitoUI-1.0-jar-with-dependencies.jar) in this directory.
+
+
+>Notice:\
+If you are interest to provision the board to your own AWS account, customize the firmware for evaluation, you can use the materals in below link:\
+https://github.com/MicrochipTech/aws-iot-winc1500-secure-wifi-board-included-source-files
 
